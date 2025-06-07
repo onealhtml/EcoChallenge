@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <locale.h>
-#include <stdlib.h> // adicionando para system("cls")
+#include <stdlib.h> // Adicionado para system("cls")
+#include <windows.h> // Adicionado para Sleep()
 
 #define MAX_USUARIOS 100
 #define MAX_ACOES_POR_USUARIO 15
@@ -25,9 +26,9 @@ void adicionarAcao(int id_usuario, int id_acao);
 int calcularPontos(int id_acao);
 void visualizarAcoes();
 char* obterNomeAcao(int id_acao);
+void ranking();
 
-int main(void)
-{
+int main(void){
     setlocale(LC_ALL, "Portuguese");
 
     menu();
@@ -35,8 +36,7 @@ int main(void)
     return 0;
 }
 
-void menu()
-{
+void menu() {
     int opcao;
 
     do {
@@ -62,12 +62,17 @@ void menu()
                 visualizarAcoes();
                 break;
             case 3:
-                // Implementar ranking
-                printf("Opção 3 ainda não implementada.\n");
-                system("pause");
+                ranking();
                 break;
             case 4:
-                printf("Saindo...\n");
+                system("cls");
+                printf("Feito por onealhtml, tinpack e besoaresn");
+
+                // Contador regressivo de 5 segundos
+                for (int i = 5; i > 0; i--) {
+                    printf(".");
+                    Sleep(1000);
+                }
                 break;
             default:
                 printf("Opção inválida! Tente novamente.\n");
@@ -77,8 +82,7 @@ void menu()
     } while (opcao != 4);
 }
 
-void registroacao()
-{
+void registroacao() {
     system("cls");
 
     char nome[100];
@@ -228,4 +232,36 @@ char* obterNomeAcao(int id_acao) {
         case 9: return "Plantar árvores";
         default: return "Ação desconhecida";
     }
+}
+
+void ranking() {
+    system("cls");
+    printf("#############################\n");
+    printf("EcoChallenge - Ranking de Pontuação\n\n");
+
+    if (contador_usuarios == 0) {
+        printf("Nenhum participante registrado ainda.\n");
+    } else {
+        // Ordenar usuários por pontuação
+        for (int i = 0; i < contador_usuarios - 1; i++) {
+            for (int j = 0; j < contador_usuarios - i - 1; j++) {
+                if (usuarios[i].pontuacao < usuarios[j].pontuacao) {
+                    Usuario temp = usuarios[i];
+                    usuarios[i] = usuarios[j + 1];
+                    usuarios[j + 1] = temp;
+                }
+            }
+        }
+
+        printf("Ranking:\n");
+        printf("---------------------------\n");
+        for (int i = 0; i < contador_usuarios; i++) {
+            printf("%d. %s - %d pontos\n", i + 1, usuarios[i].nome, usuarios[i].pontuacao);
+        }
+        printf("---------------------------\n");
+        printf("#############################\n");
+    }
+
+    printf("\nPressione Enter para voltar ao menu principal...");
+    getchar();
 }
