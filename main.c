@@ -175,7 +175,6 @@ int adicionarUsuario(char *nome) {
 
 void adicionarAcao(int id_usuario, int id_acao) {
     if (id_usuario >= 0 && id_usuario < MAX_USUARIOS) {
-
         if (usuarios[id_usuario].num_acoes < MAX_ACOES_POR_USUARIO) {
             usuarios[id_usuario].acoes[usuarios[id_usuario].num_acoes++] = id_acao;
             usuarios[id_usuario].pontuacao += calcularPontos(id_acao);
@@ -244,7 +243,7 @@ char* obterNomeAcao(int id_acao) {
         case 3: return "Economia de energia";
         case 4: return "Compostagem";
         case 5: return "Reciclagem de materiais";
-        case 6: return "Organização de trocas (brecho)";
+        case 6: return "Organização de trocas (brechó)";
         case 7: return "Meios de transportes não poluentes";
         case 8: return "Reaproveitamento de água da chuva";
         case 9: return "Plantar árvores";
