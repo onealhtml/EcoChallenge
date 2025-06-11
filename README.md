@@ -6,6 +6,7 @@ O EcoChallenge é um sistema de monitoramento de hábitos sustentáveis desenvol
 ## Funcionalidades
 ### Menu Principal
 ![Menu](assets-EcoChallenge/menu-EcoChallenge.jpeg)
+
 - Registrar ação sustentável
 - Visualizar ações de um participante
 - Ver ranking de pontuação
@@ -13,10 +14,12 @@ O EcoChallenge é um sistema de monitoramento de hábitos sustentáveis desenvol
   
 ### Registro de Nome
 ![Coloque o seu nome:](assets-EcoChallenge/entradaDoNome-EcoChallenge.jpeg)
+
 Entrada do nome do usuário
 
 ### Ações Sustentáveis Disponíveis
 ![Registro de atividades](assets-EcoChallenge/atividades-EcoChallenge.jpeg)
+
 1. Separar lixo (10 pontos)
 2. Economia de água (15 pontos)
 3. Economia de energia (15 pontos)
@@ -30,11 +33,13 @@ Entrada do nome do usuário
 
 ### Vizualizar o Histórico de Ações
 ![Registro de atividades](assets-EcoChallenge/vizualizadorDeAcoes-EcoChallenge.jpeg)
+
 Acesse para ver o histórico de ações de qualquer usúario
 
 
 ### Ranking de pontuação dos jogadores
 ![Ranking](assets-EcoChallenge/ranking-EcoChallenge.jpeg)
+
 Mostra a pontuação de todos os jogadores em forma de um ranking
 
 ## Estrutura do Sistema
