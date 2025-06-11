@@ -15,29 +15,29 @@ typedef struct { // Estrutura para armazenar informações do usuário
     int meta_diaria; // Meta diária de pontos do usuário
 } Usuario;
 
-void menu(int *contador_usuarios, Usuario *usuarios);
-void registroacao(int *contador_usuarios, Usuario *usuarios);
-int buscarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios);
-int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios);
-void adicionarAcao(int id_usuario, int id_acao, Usuario *usuarios);
+// Variáveis globais para acessar em todas as funções
+Usuario usuarios[MAX_USUARIOS];
+int contador_usuarios = 0;
+
+void menu();
+void registroacao();
+int buscarUsuario(char *nome);
+int adicionarUsuario(char *nome);
+void adicionarAcao(int id_usuario, int id_acao);
 int calcularPontos(int id_acao);
-void visualizarAcoes(int *contador_usuarios, Usuario *usuarios);
+void visualizarAcoes();
 char* obterNomeAcao(int id_acao);
-void ranking(int *contador_usuarios, Usuario *usuarios);
+void ranking();
 
 int main(void) {
     setlocale(LC_ALL, "Portuguese");
 
-    Usuario usuarios[MAX_USUARIOS];
-    int contador_usuarios = 0;
-
-    menu(&contador_usuarios, usuarios);
+    menu();
 
     return 0;
 }
 
-void menu(int *contador_usuarios, Usuario *usuarios) {
-
+void menu() {
     int opcao;
 
     do {
@@ -58,13 +58,13 @@ void menu(int *contador_usuarios, Usuario *usuarios) {
 
         switch (opcao) {
             case 1:
-                registroacao(contador_usuarios, usuarios);
+                registroacao();
                 break; // Adicionado break
             case 2:
-                visualizarAcoes(contador_usuarios, usuarios);
+                visualizarAcoes();
                 break;
             case 3:
-                ranking(contador_usuarios, usuarios);
+                ranking();
                 break;
             case 4:
                 system("cls");
@@ -84,7 +84,7 @@ void menu(int *contador_usuarios, Usuario *usuarios) {
     } while (opcao != 4);
 }
 
-void registroacao(int *contador_usuarios, Usuario *usuarios) {
+void registroacao() {
     system("cls");
 
     char nome[100];
@@ -99,9 +99,9 @@ void registroacao(int *contador_usuarios, Usuario *usuarios) {
     nome[strcspn(nome, "\n")] = 0;
 
 
-    int id_usuario = buscarUsuario(nome, contador_usuarios, usuarios);
+    int id_usuario = buscarUsuario(nome);
     if (id_usuario == -1) {
-        id_usuario = adicionarUsuario(nome, contador_usuarios, usuarios);
+        id_usuario = adicionarUsuario(nome);
         if (id_usuario == -1) {
             printf("ERRO: Limite de usuários atingido (%d)!\n", MAX_USUARIOS);
             printf("Pressione Enter para voltar ao menu principal...");
@@ -139,7 +139,7 @@ void registroacao(int *contador_usuarios, Usuario *usuarios) {
             if (usuarios[id_usuario].num_acoes >= MAX_ACOES_POR_USUARIO) {
                 printf("ERRO: Limite de ações atingido (%d)!\n", MAX_ACOES_POR_USUARIO);
             } else {
-                adicionarAcao(id_usuario, acao_escolhida, usuarios);
+                adicionarAcao(id_usuario, acao_escolhida);
                 pontos = calcularPontos(acao_escolhida);
                 printf("Ação %d registrada para %s! Pontos: %d\n", acao_escolhida, nome, pontos);
             }
@@ -155,8 +155,8 @@ void registroacao(int *contador_usuarios, Usuario *usuarios) {
     } while (acao_escolhida != 0);
 }
 
-int buscarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) {
-    for (int i = 0; i < *contador_usuarios; i++) {
+int buscarUsuario(char *nome) {
+    for (int i = 0; i < contador_usuarios; i++) {
         if (strcmp(usuarios[i].nome, nome) == 0) {
             return i;
         }
@@ -164,12 +164,12 @@ int buscarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) {
     return -1;
 }
 
-int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) {
-    if (*contador_usuarios < MAX_USUARIOS) {
-        strcpy(usuarios[*contador_usuarios].nome, nome);
-        usuarios[*contador_usuarios].num_acoes = 0;
-        usuarios[*contador_usuarios].pontuacao = 0;
-        usuarios[*contador_usuarios].meta_diaria = 0;
+int adicionarUsuario(char *nome) {
+    if (contador_usuarios < MAX_USUARIOS) {
+        strcpy(usuarios[contador_usuarios].nome, nome);
+        usuarios[contador_usuarios].num_acoes = 0;
+        usuarios[contador_usuarios].pontuacao = 0;
+        usuarios[contador_usuarios].meta_diaria = 0;
 
         int meta;
         system("cls");
@@ -181,17 +181,17 @@ int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) {
         }
         getchar(); // Limpa o buffer do teclado
 
-        usuarios[*contador_usuarios].meta_diaria = meta;
+        usuarios[contador_usuarios].meta_diaria = meta;
         printf("Meta diária definida: %d pontos\n", meta);
         printf("Pressione Enter para continuar...");
         getchar();
 
-        return (*contador_usuarios)++;
+        return contador_usuarios++;
     }
     return -1;
 }
 
-void adicionarAcao(int id_usuario, int id_acao, Usuario *usuarios) {
+void adicionarAcao(int id_usuario, int id_acao) {
     if (id_usuario >= 0 && id_usuario < MAX_USUARIOS) {
         if (usuarios[id_usuario].num_acoes < MAX_ACOES_POR_USUARIO) {
             int pontos_anteriores = usuarios[id_usuario].pontuacao;
@@ -225,7 +225,7 @@ int calcularPontos(int id_acao) {
     }
 }
 
-void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) {
+void visualizarAcoes() {
     system("cls");
     char nome[100];
 
@@ -236,7 +236,7 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) {
     fgets(nome, sizeof(nome), stdin);
     nome[strcspn(nome, "\n")] = 0;
 
-    int id_usuario = buscarUsuario(nome, contador_usuarios, usuarios);
+    int id_usuario = buscarUsuario(nome);
 
     if (id_usuario == -1) {
         printf("\nERRO: Participante não encontrado!\n");
@@ -291,18 +291,18 @@ char* obterNomeAcao(int id_acao) {
     }
 }
 
-void ranking(int *contador_usuarios, Usuario *usuarios) {
+void ranking() {
     system("cls");
     printf("##############################\n");
     printf("EcoChallenge - Ranking de Pontuação\n");
     printf("##############################\n\n");
 
-    if (*contador_usuarios == 0) {
+    if (contador_usuarios == 0) {
         printf("ERRO: Nenhum participante registrado ainda.\n");
     } else {
         // Ordenar usuários por pontuação
-        for (int i = 0; i < *contador_usuarios - 1; i++) {
-            for (int j = i + 1; j < *contador_usuarios; j++) {
+        for (int i = 0; i < contador_usuarios - 1; i++) {
+            for (int j = i + 1; j < contador_usuarios; j++) {
                 if (usuarios[j].pontuacao > usuarios[i].pontuacao) {
                     Usuario temp = usuarios[i];
                     usuarios[i] = usuarios[j];
@@ -313,7 +313,7 @@ void ranking(int *contador_usuarios, Usuario *usuarios) {
 
         printf("Ranking:\n");
         printf("------------------------------\n");
-        for (int i = 0; i < *contador_usuarios; i++) {
+        for (int i = 0; i < contador_usuarios; i++) {
             printf("%d. %s - %d pontos\n", i + 1, usuarios[i].nome, usuarios[i].pontuacao);
         }
         printf("------------------------------\n");
