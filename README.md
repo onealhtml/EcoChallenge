@@ -4,19 +4,19 @@
 O EcoChallenge é um sistema de monitoramento de hábitos sustentáveis desenvolvido em C. O programa permite que usuários registrem suas ações ecológicas, visualizem suas atividades e comparem suas pontuações com outros participantes através de um ranking.
 
 ## Funcionalidades
-![Menu](assets-EcoChallenge/menu-EcoChallenge.jpeg)
 ### Menu Principal
+![Menu](assets-EcoChallenge/menu-EcoChallenge.jpeg)
 - Registrar ação sustentável
 - Visualizar ações de um participante
 - Ver ranking de pontuação
 - Sair
   
-![Coloque o seu nome:](assets-EcoChallenge/entradaDoNome-EcoChallenge.jpeg)
 ### Registro de Nome
+![Coloque o seu nome:](assets-EcoChallenge/entradaDoNome-EcoChallenge.jpeg)
 Entrada do nome do usuário
 
-![Registro de atividades](assets-EcoChallenge/atividades-EcoChallenge.jpeg)
 ### Ações Sustentáveis Disponíveis
+![Registro de atividades](assets-EcoChallenge/atividades-EcoChallenge.jpeg)
 1. Separar lixo (10 pontos)
 2. Economia de água (15 pontos)
 3. Economia de energia (15 pontos)
@@ -27,12 +27,14 @@ Entrada do nome do usuário
 8. Reaproveitamento de água da chuva (30 pontos)
 9. Plantar árvores (50 pontos)
 
-![Registro de atividades](assets-EcoChallenge/vizualizadorDeAcoes-EcoChallenge.jpeg)
+
 ### Vizualizar o Histórico de Ações
+![Registro de atividades](assets-EcoChallenge/vizualizadorDeAcoes-EcoChallenge.jpeg)
 Acesse para ver o histórico de ações de qualquer usúario
 
-![Ranking](assets-EcoChallenge/ranking-EcoChallenge.jpeg)
+
 ### Ranking de pontuação dos jogadores
+![Ranking](assets-EcoChallenge/ranking-EcoChallenge.jpeg)
 Mostra a pontuação de todos os jogadores em forma de um ranking
 
 ## Estrutura do Sistema
