@@ -4,7 +4,7 @@
 O EcoChallenge é um sistema de monitoramento de hábitos sustentáveis desenvolvido em C. O programa permite que usuários registrem suas ações ecológicas, visualizem suas atividades e comparem suas pontuações com outros participantes através de um ranking.
 
 ## Funcionalidades
-
+![Menu](assets-EcoChallenge/atividades-EcoChallenge.jpeg)
 ### Menu Principal
 - Registrar ação sustentável
 - Visualizar ações de um participante
