@@ -1,17 +1,18 @@
-#include <stdio.h>
-#include <string.h>
-#include <locale.h>
+#include <stdio.h> // Adicionado para manipulação de entrada/saída
+#include <string.h> // Adicionado para manipulação de strings
+#include <locale.h> // Adicionado para acentuação
 #include <stdlib.h> // Adicionado para system("cls")
 #include <windows.h> // Adicionado para Sleep()
 
-#define MAX_USUARIOS 100
-#define MAX_ACOES_POR_USUARIO 15
+#define MAX_USUARIOS 100 // Número máximo de usuários
+#define MAX_ACOES_POR_USUARIO 15 // Número máximo de ações por usuário
 
-typedef struct {
-    char nome[100];
+typedef struct { // Estrutura para armazenar informações do usuário
+    char nome[100]; // Nome do usuário
     int acoes[MAX_ACOES_POR_USUARIO]; // IDs das ações realizadas
     int num_acoes; // Contador de ações do usuário
     int pontuacao; // Pontuação total do usuário
+    int meta_diaria; // Meta diária de pontos do usuário
 } Usuario;
 
 // Variáveis globais para acessar em todas as funções
@@ -28,7 +29,7 @@ void visualizarAcoes();
 char* obterNomeAcao(int id_acao);
 void ranking();
 
-int main(void){
+int main(void) {
     setlocale(LC_ALL, "Portuguese");
 
     menu();
@@ -120,7 +121,7 @@ void registroacao() {
         printf("3 - Economia de energia - 15\n");
         printf("4 - Compostagem - 15\n");
         printf("5 - Reciclagem de materiais - 20\n");
-        printf("6 - Organização de trocas (brecho) - 25\n");
+        printf("6 - Organização de trocas (brechó) - 25\n");
         printf("7 - Meios de transportes não poluentes - 30\n");
         printf("8 - Reaproveitamento de água da chuva - 30\n");
         printf("9 - Plantar árvores - 50\n");
@@ -168,6 +169,23 @@ int adicionarUsuario(char *nome) {
         strcpy(usuarios[contador_usuarios].nome, nome);
         usuarios[contador_usuarios].num_acoes = 0;
         usuarios[contador_usuarios].pontuacao = 0;
+        usuarios[contador_usuarios].meta_diaria = 0;
+
+        int meta;
+        system("cls");
+        printf("Bem-vindo ao EcoChallenge, %s!\n", nome);
+        printf("Defina sua meta diária de pontos: ");
+        if (scanf("%d", &meta) != 1 || meta <= 0) {
+            printf("Meta inválida! Definindo meta padrão de 50 pontos.\n");
+            meta = 50;
+        }
+        getchar(); // Limpa o buffer do teclado
+
+        usuarios[contador_usuarios].meta_diaria = meta;
+        printf("Meta diária definida: %d pontos\n", meta);
+        printf("Pressione Enter para continuar...");
+        getchar();
+
         return contador_usuarios++;
     }
     return -1;
@@ -176,8 +194,21 @@ int adicionarUsuario(char *nome) {
 void adicionarAcao(int id_usuario, int id_acao) {
     if (id_usuario >= 0 && id_usuario < MAX_USUARIOS) {
         if (usuarios[id_usuario].num_acoes < MAX_ACOES_POR_USUARIO) {
+            int pontos_anteriores = usuarios[id_usuario].pontuacao;
+
+            // Adiciona a ação e atualiza a pontuação
             usuarios[id_usuario].acoes[usuarios[id_usuario].num_acoes++] = id_acao;
             usuarios[id_usuario].pontuacao += calcularPontos(id_acao);
+
+            // Verifica se o usuário atingiu a meta diária com essa ação
+            if (pontos_anteriores < usuarios[id_usuario].meta_diaria &&
+                usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) {
+                system("cls");
+                printf("\n**************************************\n");
+                printf("PARABÉNS, %s!\n", usuarios[id_usuario].nome);
+                printf("Você atingiu sua meta diária de %d pontos!\n", usuarios[id_usuario].meta_diaria);
+                printf("**************************************\n");
+            }
         }
     }
 }
@@ -214,7 +245,16 @@ void visualizarAcoes() {
         printf("##############################\n");
         printf("EcoChallenge - Visualização de Ações\n\n");
         printf("Participante: %s\n", usuarios[id_usuario].nome);
-        printf("Pontuação total: %d pontos\n\n", usuarios[id_usuario].pontuacao);
+        printf("Pontuação total: %d pontos\n", usuarios[id_usuario].pontuacao);
+        printf("Meta diária: %d pontos\n", usuarios[id_usuario].meta_diaria);
+
+        // Mostra o progresso da meta
+        if (usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) {
+            printf("Status: Meta diária ATINGIDA!\n\n");
+        } else {
+            printf("Status: Faltam %d pontos para atingir a meta diária\n\n",
+                  usuarios[id_usuario].meta_diaria - usuarios[id_usuario].pontuacao);
+        }
 
         if (usuarios[id_usuario].num_acoes == 0) {
             printf("Este participante ainda não registrou nenhuma ação.\n");
