@@ -250,7 +250,7 @@ void visualizarAcoes() {
 
         // Mostra o progresso da meta
         if (usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) {
-            printf("Status: Meta diária ATINGIDA!\n\n");
+            printf("Status: Meta diária atingida!\n\n");
         } else {
             printf("Status: Faltam %d pontos para atingir a meta diária\n\n",
                   usuarios[id_usuario].meta_diaria - usuarios[id_usuario].pontuacao);
@@ -298,7 +298,7 @@ void ranking() {
     printf("##############################\n\n");
 
     if (contador_usuarios == 0) {
-        printf("ERRO: Nenhum participante registrado ainda.\n");
+        printf("ERRO: Nenhum participante registrado.\n");
     } else {
         // Ordenar usuários por pontuação
         for (int i = 0; i < contador_usuarios - 1; i++) {
