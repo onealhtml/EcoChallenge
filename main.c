@@ -23,7 +23,7 @@ typedef struct { // Estrutura para armazenar informações do usuário
     int meta_diaria; // Meta diária de pontos do usuário
 } Usuario;
 
-void menu(int *contador_usuarios, Usuario *usuarios); // Declaração da função menu
+void Menu(int *contador_usuarios, Usuario *usuarios); // Declaração da função menu
 void registroAcao(int *contador_usuarios, Usuario *usuarios); // Declaração da função registroAcao
 int buscarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios); // Declaração da função buscarUsuario
 int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios); // Declaração da função adicionarUsuario
@@ -32,32 +32,45 @@ int calcularPontos(int id_acao); // Declaração da função calcularPontos
 void visualizarAcoes(int *contador_usuarios, Usuario *usuarios); // Declaração da função visualizarAcoes
 char* obterNomeAcao(int id_acao); // Declaração da função obterNomeAcao
 void Ranking(int *contador_usuarios, Usuario *usuarios); // Declaração da função Ranking
+void salvarDados(int contador_usuarios, Usuario *usuarios); // Declaração da função salvarDados
+void carregarDados(int *contador_usuarios, Usuario *usuarios); // Declaração da função carregarDados
+void Creditos(); // Declaração da função Creditos
 
 int main(void) { // Função principal do programa
-    setlocale(LC_ALL, "Portuguese"); // Configura o locale para português para suporte a acentuação
+    setlocale(LC_ALL, "Portuguese_Brazil.1252"); // Configura o locale para português para suporte a acentuação
+    system("chcp 1252"); // Configura a página de código do console para 1252 (Windows)
 
     Usuario usuarios[MAX_USUARIOS]; // Array para armazenar os usuários
     int contador_usuarios = 0; // Contador de usuários registrados
 
-    menu(&contador_usuarios, usuarios); // Chama a função menu para iniciar o programa
+    carregarDados(&contador_usuarios, usuarios); // Tenta carregar os dados salvos ao iniciar o programa
+
+    Menu(&contador_usuarios, usuarios); // Chama a função menu para iniciar o programa
+
+    salvarDados(contador_usuarios, usuarios); // Salva os dados dos usuários antes de encerrar o programa
+
+    Creditos();
 
     return 0; // Retorna 0 para indicar que o programa terminou corretamente
 }
 
-void menu(int *contador_usuarios, Usuario *usuarios) { // Função para exibir o menu principal
+void Menu(int *contador_usuarios, Usuario *usuarios) { // Função para exibir o menu principal
 
     int opcao; // Variável para armazenar a opção escolhida pelo usuário
 
     do { // Loop para exibir o menu até que o usuário escolha sair
         system("cls"); // Limpa a tela do console
-        printf("##############################\n");
-        printf("EcoChallenge - Monitor de Hábitos Sustentáveis\n");
-        printf("\nDigite a opção desejada:\n");
+        printf("######################################################\n");
+        printf("###                                                ###\n");
+        printf("### EcoChallenge - Monitor de Hábitos Sustentáveis ###\n");
+        printf("###                                                ###\n");
+        printf("######################################################\n\n");
+        printf("Digite a opção desejada:\n");
         printf("1 - Registrar ação sustentável\n");
         printf("2 - Visualizar ações de algum participante\n");
         printf("3 - Ver ranking de pontuação\n");
-        printf("4 - Sair\n");
-        printf("##############################\n");
+        printf("4 - Sair e salvar\n");
+        printf("######################################################\n");
         if (scanf("%d", &opcao) != 1) { // Verifica se a entrada é válida (scanf retorna 1 se a leitura foi bem-sucedida)
             opcao = 0; // Define uma opção inválida para tratar o erro
         }
@@ -74,14 +87,6 @@ void menu(int *contador_usuarios, Usuario *usuarios) { // Função para exibir o m
                 Ranking(contador_usuarios, usuarios); // Chama a função para exibir o ranking de pontuação
                 break; // Sai do switch
             case 4: // Opção para sair do programa
-                system("cls"); // Limpa a tela antes de sair
-                printf("Feito por onealhtml, tinpack e besoaresn"); // Mensagem de agradecimento
-
-                // Contador regressivo de 5 segundos
-                for (int i = 5; i > 0; i--) {
-                    printf("."); // Exibe um ponto a cada segundo
-                    Sleep(1000); // Pausa por 1 segundo
-                }
                 break; // Sai do switch
             default: // Caso de uma opção inválida
                 printf("ERRO: Entrada inválida! Tente novamente.\n"); // Mensagem de erro
@@ -98,9 +103,11 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
     int acao_escolhida; // Variável para armazenar a ação escolhida pelo usuário
     int pontos = 0; // Variável para armazenar a pontuação da ação escolhida
 
-    printf("##############################\n");
-    printf("EcoChallenge - Registro de Ação\n");
-    printf("##############################\n\n");
+    printf("######################################################\n");
+    printf("###                                                ###\n");
+    printf("###      EcoChallenge - Registro de Ação           ###\n");
+    printf("###                                                ###\n");
+    printf("######################################################\n\n");
     printf("Digite o seu nome: ");
     fgets(nome, sizeof(nome), stdin); // Lê o nome do usuário
     nome[strcspn(nome, "\n")] = 0; // Remove o caractere de nova linha do final da string
@@ -119,8 +126,11 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
 
     do { // Loop para registrar ações até que o usuário escolha voltar
         system("cls"); // Limpa a tela do console
-        printf("##############################\n");
-        printf("EcoChallenge - Registro de atividades\n\n");
+        printf("######################################################\n");
+        printf("###                                                ###\n");
+        printf("###    EcoChallenge - Registro de atividades       ###\n");
+        printf("###                                                ###\n");
+        printf("######################################################\n\n");
         printf("Participante: %s\n\n", nome);
         printf("Digite a ação feita:\n");
         printf("1 - Separar lixo - 10\n");
@@ -133,11 +143,10 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
         printf("8 - Reaproveitamento de água da chuva - 30\n");
         printf("9 - Plantar árvores - 50\n");
         printf("0 - Voltar\n");
-        printf("##############################\n");
+        printf("######################################################\n");
         printf("Escolha uma opção: ");
         if (scanf("%d", &acao_escolhida) != 1) { // Verifica se a entrada é válida (scanf retorna 1 se a leitura foi bem-sucedida)
             acao_escolhida = -1; // Define uma opção inválida para tratar o erro
-            printf("ERRO: Entrada inválida!\n");
         }
         getchar(); // Limpa o buffer do teclado
 
@@ -154,10 +163,10 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
             getchar(); // Pausa para o usuário ler a mensagem
         } else if (acao_escolhida == 0) { // Se o usuário escolheu voltar ao menu principal
             printf("Retornando ao menu principal...\n");
+            Sleep(1000); // Pausa de 1 segundo para o usuário ler a mensagem
         } else { // Se o usuário escolheu uma opção inválida
             printf("ERRO: Opção inválida!\n");
-            printf("Pressione Enter para tentar novamente...");
-            getchar(); // Pausa para o usuário ler a mensagem
+            system("pause");
         }
     } while (acao_escolhida != 0); // Continua registrando ações até que o usuário escolha voltar
 }
@@ -179,20 +188,31 @@ int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) { //
         usuarios[*contador_usuarios].meta_diaria = 0; // Inicializa a meta diária do usuário
 
         int meta; // Variável para armazenar a meta diária de pontos
-        system("cls"); // Limpa a tela do console
-        printf("Bem-vindo ao EcoChallenge, %s!\n", nome); // Mensagem de boas-vindas
-        printf("Defina sua meta diária de pontos: "); // Solicita ao usuário que defina sua meta diária
-        if (scanf("%d", &meta) != 1 || meta <= 0) { // Verifica se a entrada é válida (scanf retorna 1 se a leitura foi bem-sucedida)
-            printf("Meta inválida! Definindo meta padrão de 50 pontos.\n"); // Mensagem de erro se a entrada for inválida
-            meta = 50; // Define uma meta padrão de 50 pontos se a entrada for inválida
-        }
-        getchar(); // Limpa o buffer do teclado
+        do
+        {
+            system("cls"); // Limpa a tela do console
+            printf("######################################################\n");
+            printf("###                                                ###\n");
+            printf("###      EcoChallenge - Registro de Usuário        ###\n");
+            printf("###                                                ###\n");
+            printf("######################################################\n\n");
+            printf("Bem-vindo ao EcoChallenge, %s!\n", nome); // Mensagem de boas-vindas
+            printf("Defina sua meta diária de pontos: "); // Solicita ao usuário que defina sua meta diária
+            if (scanf("%d", &meta) != 1 || meta <= 0) { // Verifica se a entrada é válida (scanf retorna 1 se a leitura foi bem-sucedida)
+                printf("\nMeta inválida!\n"); // Mensagem de erro se a entrada for inválida
+                meta = -1;
+                system("pause");
+            }
 
-        usuarios[*contador_usuarios].meta_diaria = meta; // Define a meta diária do usuário
-        printf("Meta diária definida: %d pontos\n", meta);
-        printf("Pressione Enter para continuar...");
-        getchar(); // Pausa para o usuário ler a mensagem
+            getchar(); // Limpa o buffer do teclado
 
+            if (meta > 0) { // Se a meta fornecida for válida (maior que 0)
+                usuarios[*contador_usuarios].meta_diaria = meta; // Define a meta diária do usuário
+                printf("\nMeta diária definida: %d pontos\n", meta);
+                printf("Pressione Enter para continuar...");
+                getchar(); // Pausa para o usuário ler a mensagem
+            }
+        } while (meta <= 0); // Continua solicitando a meta diária até que o usuário forneça um valor válido
         return (*contador_usuarios)++; // Retorna o índice do novo usuário e incrementa o contador de usuários
     }
     return -1; // Retorna -1 se não for possível adicionar o usuário (limite atingido)
@@ -236,9 +256,11 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) { // Função para
     system("cls"); // Limpa a tela do console
     char nome[100]; // Variável temporária para armazenar o nome do usuário
 
-    printf("##############################\n");
-    printf("EcoChallenge - Visualização de Ações\n");
-    printf("##############################\n\n");
+    printf("######################################################\n");
+    printf("###                                                ###\n");
+    printf("###     EcoChallenge - Visualização de Ações       ###\n");
+    printf("###                                                ###\n");
+    printf("######################################################\n\n");
     printf("Digite o seu nome: ");
     fgets(nome, sizeof(nome), stdin); // Lê o nome do usuário
     nome[strcspn(nome, "\n")] = 0; // Remove o caractere de nova linha do final da string
@@ -249,8 +271,11 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) { // Função para
         printf("\nERRO: Participante não encontrado!\n"); // Mensagem de erro
     } else { // Se o usuário foi encontrado mostra as ações registradas
         system("cls");
-        printf("##############################\n");
-        printf("EcoChallenge - Visualização de Ações\n\n");
+        printf("######################################################\n");
+        printf("###                                                ###\n");
+        printf("###     EcoChallenge - Visualização de Ações       ###\n");
+        printf("###                                                ###\n");
+        printf("######################################################\n\n");
         printf("Participante: %s\n", usuarios[id_usuario].nome);
         printf("Pontuação total: %d pontos\n", usuarios[id_usuario].pontuacao);
         printf("Meta diária: %d pontos\n", usuarios[id_usuario].meta_diaria);
@@ -276,7 +301,7 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) { // Função para
                 printf("%d. %s - %d pontos\n", i+1, obterNomeAcao(id_acao), pontos); // Exibe a ação e os pontos correspondentes
             }
             printf("------------------------------\n");
-            printf("##############################\n");
+            printf("######################################################\n");
         }
     }
 
@@ -301,13 +326,15 @@ char* obterNomeAcao(int id_acao) { // Função para obter o nome da ação com base 
 
 void Ranking(int *contador_usuarios, Usuario *usuarios) { // Função para exibir o ranking de pontuação dos usuários
     system("cls"); // Limpa a tela do console
-    printf("##############################\n");
-    printf("EcoChallenge - Ranking de Pontuação\n");
-    printf("##############################\n\n");
+    printf("######################################################\n");
+    printf("###                                                ###\n");
+    printf("###     EcoChallenge - Ranking de Pontuação        ###\n");
+    printf("###                                                ###\n");
+    printf("######################################################\n\n");
 
     if (*contador_usuarios == 0) { // Verifica se não há usuários registrados
         printf("ERRO: Nenhum participante registrado ainda.\n");
-    } else { // Se há usuários registrados, exibe o rankin
+    } else { // Se há usuários registrados, exibe o ranking
         for (int i = 0; i < *contador_usuarios - 1; i++) { // Loop para ordenar os usuários por pontuação
             for (int j = i + 1; j < *contador_usuarios; j++) { // Loop aninhado para comparar os usuários
                 if (usuarios[j].pontuacao > usuarios[i].pontuacao) { // Se o usuário j tem mais pontos que o usuário i
@@ -324,9 +351,89 @@ void Ranking(int *contador_usuarios, Usuario *usuarios) { // Função para exibir 
             printf("%d. %s - %d pontos\n", i + 1, usuarios[i].nome, usuarios[i].pontuacao); // Exibe o ranking do usuário
         }
         printf("------------------------------\n");
-        printf("##############################\n");
+        printf("######################################################\n");
     }
 
     printf("\nPressione Enter para voltar ao menu principal...");
     getchar(); // Pausa para o usuário ler a mensagem
+}
+
+void salvarDados(int contador_usuarios, Usuario *usuarios) { // Função para salvar os dados dos usuários em um arquivo
+    FILE *arquivo = fopen("dados_usuarios.txt", "w"); // Abre o arquivo para escrita
+    if (arquivo == NULL) { // Verifica se o arquivo foi aberto com sucesso
+        printf("ERRO: Não foi possível salvar os dados!\n");
+        Sleep(2000); // Pausa de 2 segundos para o usuário ler a mensagem
+        return;
+    }
+
+    fprintf(arquivo, "%d\n", contador_usuarios); // Salva o número total de usuários
+
+    // Salva os dados de cada usuário
+    for (int i = 0; i < contador_usuarios; i++) { // Loop para percorrer os usuários registrados
+        fprintf(arquivo, "%s\n", usuarios[i].nome); // Nome do usuário
+        fprintf(arquivo, "%d\n", usuarios[i].num_acoes); // Número de ações
+        fprintf(arquivo, "%d\n", usuarios[i].pontuacao); // Pontuação total
+        fprintf(arquivo, "%d\n", usuarios[i].meta_diaria); // Meta diária
+
+        // Salva as ações do usuário
+        for (int j = 0; j < usuarios[i].num_acoes; j++) { // Loop para percorrer as ações registradas pelo usuário
+            fprintf(arquivo, "%d\n", usuarios[i].acoes[j]); // ID da ação
+        }
+    }
+
+    fclose(arquivo); // Fecha o arquivo
+    printf("\nDados salvos com sucesso!\n");
+    Sleep(2000); // Pausa de 2 segundos para o usuário ler a mensagem
+}
+
+void carregarDados(int *contador_usuarios, Usuario *usuarios) { // Função para carregar os dados dos usuários a partir de um arquivo
+    system("cls"); // Limpa a tela do console
+
+    FILE *arquivo = fopen("dados_usuarios.txt", "r"); // Abre o arquivo para leitura
+    if (arquivo == NULL) { // Verifica se o arquivo foi aberto com sucesso
+        printf("Nenhum dado encontrado. Iniciando com usuários vazios.\n");
+        Sleep(2000); // Pausa de 2 segundos para o usuário ler a mensagem
+        return; // Retorna se não houver dados para carregar
+    }
+
+    fscanf(arquivo, "%d\n", contador_usuarios); // Lê o número total de usuários
+
+    // Carrega os dados de cada usuário
+    for (int i = 0; i < *contador_usuarios; i++) { // Loop para percorrer os usuários registrados
+        fgets(usuarios[i].nome, 100, arquivo); // Lê o nome do usuário
+        usuarios[i].nome[strcspn(usuarios[i].nome, "\n")] = 0; // Remove o caractere de nova linha
+
+        fscanf(arquivo, "%d\n", &usuarios[i].num_acoes); // Lê o número de ações
+        fscanf(arquivo, "%d\n", &usuarios[i].pontuacao); // Lê a pontuação total
+        fscanf(arquivo, "%d\n", &usuarios[i].meta_diaria); // Lê a meta diária
+
+        // Carrega as ações do usuário
+        for (int j = 0; j < usuarios[i].num_acoes; j++) { // Loop para percorrer as ações registradas pelo usuário
+            fscanf(arquivo, "%d\n", &usuarios[i].acoes[j]); // Lê o ID da ação
+        }
+    }
+
+    fclose(arquivo); // Fecha o arquivo
+
+    printf("Dados carregados com sucesso! %d usuário(s) registrado(s).\n", *contador_usuarios);
+    Sleep(2000); // Pausa de 2 segundos para o usuário ler a mensagem
+}
+
+void Creditos() { // Função para exibir os créditos do programa
+    system("cls"); // Limpa a tela antes de sair
+    printf("######################################################\n");
+    printf("###                                                ###\n");
+    printf("###          EcoChallenge - Créditos               ###\n");
+    printf("###                                                ###\n");
+    printf("######################################################\n\n");
+    printf("Desenvolvido por:\n");
+    printf("Lorenzo Farias\n");
+    printf("Bernardo Soares Nunes\n");
+    printf("Pedro Cabral Buchaim\n\n");
+    printf("Universidade de Santa Cruz do Sul (UNISC)\n");
+    printf("Programação para Resolução de Problemas\n");
+    printf("Profa. Dra. Daniela Bagatini\n\n");
+    printf("######################################################\n");
+
+    Sleep(5000); // Pausa de 5 segundos para o usuário ler os créditos
 }
