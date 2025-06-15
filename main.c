@@ -65,12 +65,13 @@ void Menu(int *contador_usuarios, Usuario *usuarios) { // Função para exibir o m
         printf("### EcoChallenge - Monitor de Hábitos Sustentáveis ###\n");
         printf("###                                                ###\n");
         printf("######################################################\n\n");
-        printf("Digite a opção desejada:\n");
+        printf("Opções:\n");
         printf("1 - Registrar ação sustentável\n");
         printf("2 - Visualizar ações de algum participante\n");
         printf("3 - Ver ranking de pontuação\n");
         printf("4 - Sair e salvar\n");
         printf("######################################################\n");
+        printf("Digite a opção desejada: ");
         if (scanf("%d", &opcao) != 1) { // Verifica se a entrada é válida (scanf retorna 1 se a leitura foi bem-sucedida)
             opcao = 0; // Define uma opção inválida para tratar o erro
         }
@@ -132,7 +133,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
         printf("###                                                ###\n");
         printf("######################################################\n\n");
         printf("Participante: %s\n\n", nome);
-        printf("Digite a ação feita:\n");
+        printf("Ações:\n");
         printf("1 - Separar lixo - 10\n");
         printf("2 - Economia de água - 15\n");
         printf("3 - Economia de energia - 15\n");
@@ -144,7 +145,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
         printf("9 - Plantar árvores - 50\n");
         printf("0 - Voltar\n");
         printf("######################################################\n");
-        printf("Escolha uma opção: ");
+        printf("Digite a ação feita: ");
         if (scanf("%d", &acao_escolhida) != 1) { // Verifica se a entrada é válida (scanf retorna 1 se a leitura foi bem-sucedida)
             acao_escolhida = -1; // Define uma opção inválida para tratar o erro
         }
@@ -157,7 +158,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
             } else { // Se o usuário ainda pode registrar ações
                 adicionarAcao(id_usuario, acao_escolhida, usuarios); // Chama a função para adicionar a ação
                 pontos = calcularPontos(acao_escolhida); // Calcula os pontos da ação escolhida
-                printf("Ação %d registrada para %s! Pontos: %d\n", acao_escolhida, nome, pontos); // Mensagem de sucesso
+                printf("\nAção %d registrada para %s! Pontos: %d\n", acao_escolhida, nome, pontos); // Mensagem de sucesso
             }
             printf("Pressione Enter para continuar...");
             getchar(); // Pausa para o usuário ler a mensagem
@@ -231,10 +232,10 @@ void adicionarAcao(int id_usuario, int id_acao, Usuario *usuarios) { // Função p
             if (pontos_anteriores < usuarios[id_usuario].meta_diaria &&
                 usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) { // Se a pontuação anterior era menor que a meta e agora atingiu ou superou a meta
                 system("cls"); // Limpa a tela do console
-                printf("\n**************************************\n");
+                printf("\n*****************************************\n");
                 printf("PARABÉNS, %s!\n", usuarios[id_usuario].nome);
                 printf("Você atingiu sua meta diária de %d pontos!\n", usuarios[id_usuario].meta_diaria);
-                printf("**************************************\n");
+                printf("*****************************************\n");
             }
         }
     }
