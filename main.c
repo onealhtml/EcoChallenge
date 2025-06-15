@@ -49,7 +49,7 @@ int main(void) { // Função principal do programa
 
     salvarDados(contador_usuarios, usuarios); // Salva os dados dos usuários antes de encerrar o programa
 
-    Creditos();
+    Creditos(); // Exibe os créditos do programa
 
     return 0; // Retorna 0 para indicar que o programa terminou corretamente
 }
@@ -166,7 +166,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
             Sleep(1000); // Pausa de 1 segundo para o usuário ler a mensagem
         } else { // Se o usuário escolheu uma opção inválida
             printf("ERRO: Opção inválida!\n");
-            system("pause");
+            system("pause"); // Pausa para o usuário ler a mensagem
         }
     } while (acao_escolhida != 0); // Continua registrando ações até que o usuário escolha voltar
 }
@@ -281,12 +281,11 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) { // Função para
         printf("Meta diária: %d pontos\n", usuarios[id_usuario].meta_diaria);
 
         // Mostra o progresso da meta
-        if (usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) {
+        if (usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) { // Se o usuário atingiu ou superou a meta diária
             printf("Status: Meta diária ATINGIDA!\n\n");
-        } else {
-            printf("Status: Faltam %d pontos para atingir a meta diária\n\n",
-                  usuarios[id_usuario].meta_diaria - usuarios[id_usuario].pontuacao);
-        }
+        } else
+            printf("Status: Faltam %d pontos para atingir a meta diária\n\n", usuarios[id_usuario].meta_diaria - usuarios[id_usuario].pontuacao);
+
 
         // Verifica se o usuário registrou ações
         if (usuarios[id_usuario].num_acoes == 0) {
