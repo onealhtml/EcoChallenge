@@ -105,7 +105,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
 
     printf("######################################################\n");
     printf("###                                                ###\n");
-    printf("###      EcoChallenge - Registro de Ação           ###\n");
+    printf("###        EcoChallenge - Registro de Ação         ###\n");
     printf("###                                                ###\n");
     printf("######################################################\n\n");
     printf("Digite o seu nome: ");
@@ -128,7 +128,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
         system("cls"); // Limpa a tela do console
         printf("######################################################\n");
         printf("###                                                ###\n");
-        printf("###    EcoChallenge - Registro de atividades       ###\n");
+        printf("###     EcoChallenge - Registro de atividades      ###\n");
         printf("###                                                ###\n");
         printf("######################################################\n\n");
         printf("Participante: %s\n\n", nome);
@@ -193,7 +193,7 @@ int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) { //
             system("cls"); // Limpa a tela do console
             printf("######################################################\n");
             printf("###                                                ###\n");
-            printf("###      EcoChallenge - Registro de Usuário        ###\n");
+            printf("###       EcoChallenge - Registro de Usuário       ###\n");
             printf("###                                                ###\n");
             printf("######################################################\n\n");
             printf("Bem-vindo ao EcoChallenge, %s!\n", nome); // Mensagem de boas-vindas
@@ -258,7 +258,7 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) { // Função para
 
     printf("######################################################\n");
     printf("###                                                ###\n");
-    printf("###     EcoChallenge - Visualização de Ações       ###\n");
+    printf("###      EcoChallenge - Visualização de Ações      ###\n");
     printf("###                                                ###\n");
     printf("######################################################\n\n");
     printf("Digite o seu nome: ");
@@ -273,7 +273,7 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) { // Função para
         system("cls");
         printf("######################################################\n");
         printf("###                                                ###\n");
-        printf("###     EcoChallenge - Visualização de Ações       ###\n");
+        printf("###      EcoChallenge - Visualização de Ações      ###\n");
         printf("###                                                ###\n");
         printf("######################################################\n\n");
         printf("Participante: %s\n", usuarios[id_usuario].nome);
@@ -327,7 +327,7 @@ void Ranking(int *contador_usuarios, Usuario *usuarios) { // Função para exibir 
     system("cls"); // Limpa a tela do console
     printf("######################################################\n");
     printf("###                                                ###\n");
-    printf("###     EcoChallenge - Ranking de Pontuação        ###\n");
+    printf("###      EcoChallenge - Ranking de Pontuação       ###\n");
     printf("###                                                ###\n");
     printf("######################################################\n\n");
 
@@ -422,7 +422,7 @@ void Creditos() { // Função para exibir os créditos do programa
     system("cls"); // Limpa a tela antes de sair
     printf("######################################################\n");
     printf("###                                                ###\n");
-    printf("###          EcoChallenge - Créditos               ###\n");
+    printf("###           EcoChallenge - Créditos              ###\n");
     printf("###                                                ###\n");
     printf("######################################################\n\n");
     printf("Desenvolvido por:\n");
