@@ -151,7 +151,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
         // Armazenar a ação escolhida e pontuação
         if (acao_escolhida >= 1 && acao_escolhida <= 9) { // Verifica se a ação escolhida é válida
             if (usuarios[id_usuario].num_acoes >= MAX_ACOES_POR_USUARIO) { // Verifica se o usuário já atingiu o limite de ações
-                printf("ERRO: Limite de ações atingido (%d)!\n", MAX_ACOES_POR_USUARIO);
+                printf("\nERRO: Limite de ações atingido (%d)!\n", MAX_ACOES_POR_USUARIO);
             } else { // Se o usuário ainda pode registrar ações
                 adicionarAcao(id_usuario, acao_escolhida, usuarios); // Chama a função para adicionar a ação
                 pontos = calcularPontos(acao_escolhida); // Calcula os pontos da ação escolhida
@@ -160,10 +160,10 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
             printf("Pressione Enter para continuar...");
             getchar(); // Pausa para o usuário ler a mensagem
         } else if (acao_escolhida == 0) { // Se o usuário escolheu voltar ao menu principal
-            printf("Retornando ao menu principal...\n");
+            printf("\nRetornando ao menu principal...\n");
             Sleep(1000); // Pausa de 1 segundo para o usuário ler a mensagem
         } else { // Se o usuário escolheu uma opção inválida
-            printf("ERRO: Opção inválida!\n");
+            printf("\nERRO: Opção inválida!\n");
             system("pause"); // Pausa para o usuário ler a mensagem
         }
     } while (acao_escolhida != 0); // Continua registrando ações até que o usuário escolha voltar
@@ -199,7 +199,7 @@ int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) { //
             if (scanf("%d", &meta) != 1 || meta <= 0) { // Verifica se a entrada é válida (scanf retorna 1 se a leitura foi bem-sucedida)
                 printf("\nMeta inválida!\n"); // Mensagem de erro se a entrada for inválida
                 meta = -1;
-                system("pause");
+                system("pause"); // Pausa para o usuário ler a mensagem
             }
 
             getchar(); // Limpa o buffer do teclado
