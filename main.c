@@ -335,7 +335,7 @@ void Ranking(int *contador_usuarios, Usuario *usuarios) { // Função para exibir 
         for (int i = 0; i < *contador_usuarios - 1; i++) { // Loop para ordenar os usuários por pontuação
             for (int j = i + 1; j < *contador_usuarios; j++) { // Loop aninhado para comparar os usuários
                 if (usuarios[j].pontuacao > usuarios[i].pontuacao) { // Se o usuário j tem mais pontos que o usuário i
-                    Usuario temp = usuarios[i]; // Troca os usuários
+                    Usuario temp = usuarios[i]; // Armazena o usuário i temporariamente
                     usuarios[i] = usuarios[j]; // Atribui o usuário j ao usuário i
                     usuarios[j] = temp; // Atribui o usuário i ao usuário j
                 }
@@ -345,7 +345,7 @@ void Ranking(int *contador_usuarios, Usuario *usuarios) { // Função para exibir 
         printf("Ranking:\n");
         printf("------------------------------\n");
         for (int i = 0; i < *contador_usuarios; i++) { // Loop para exibir os usuários ordenados por pontuação
-            printf("%d. %s - %d pontos\n", i + 1, usuarios[i].nome, usuarios[i].pontuacao); // Exibe o ranking do usuário
+            printf("%d. %s - %d pontos\n", i + 1, usuarios[i].nome, usuarios[i].pontuacao); // Exibe o ranking de usuários
         }
         printf("------------------------------\n");
         printf("######################################################\n");
@@ -367,14 +367,14 @@ void salvarDados(int contador_usuarios, Usuario *usuarios) { // Função para salv
 
     // Salva os dados de cada usuário
     for (int i = 0; i < contador_usuarios; i++) { // Loop para percorrer os usuários registrados
-        fprintf(arquivo, "%s\n", usuarios[i].nome); // Nome do usuário
-        fprintf(arquivo, "%d\n", usuarios[i].num_acoes); // Número de ações
-        fprintf(arquivo, "%d\n", usuarios[i].pontuacao); // Pontuação total
-        fprintf(arquivo, "%d\n", usuarios[i].meta_diaria); // Meta diária
+        fprintf(arquivo, "%s\n", usuarios[i].nome); // Salva o nome do usuário
+        fprintf(arquivo, "%d\n", usuarios[i].num_acoes); // Salva o número de ações
+        fprintf(arquivo, "%d\n", usuarios[i].pontuacao); // Salva a pontuação total
+        fprintf(arquivo, "%d\n", usuarios[i].meta_diaria); // Salva a meta diária
 
         // Salva as ações do usuário
         for (int j = 0; j < usuarios[i].num_acoes; j++) { // Loop para percorrer as ações registradas pelo usuário
-            fprintf(arquivo, "%d\n", usuarios[i].acoes[j]); // ID da ação
+            fprintf(arquivo, "%d\n", usuarios[i].acoes[j]); // Salva ID da ação
         }
     }
 
