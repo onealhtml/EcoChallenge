@@ -95,23 +95,31 @@ void Menu(int *contador_usuarios, Usuario *usuarios) { // Função para exibir o m
 }
 
 void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para registrar uma ação sustentável
-    system("cls"); // Limpa a tela do console
 
+    int detectEspacos = 0; // Variável para detectar se o nome contém apenas espaços
     char nome[100]; // Variável temporária para armazenar o nome do usuário
     int acao_escolhida; // Variável para armazenar a ação escolhida pelo usuário
     int pontos = 0; // Variável para armazenar a pontuação da ação escolhida
 
-    printf("######################################################\n");
-    printf("###                                                ###\n");
-    printf("###        EcoChallenge - Registro de Ação         ###\n");
-    printf("###                                                ###\n");
-    printf("######################################################\n\n");
-    printf("Digite o seu nome: ");
-    fgets(nome, sizeof(nome), stdin); // Lê o nome do usuário
-    nome[strcspn(nome, "\n")] = 0; // Remove o caractere de nova linha do final da string
-
+    do {
+        system("cls"); // Limpa a tela do console
+        printf("######################################################\n");
+        printf("###                                                ###\n");
+        printf("###        EcoChallenge - Registro de Ação         ###\n");
+        printf("###                                                ###\n");
+        printf("######################################################\n\n");
+        printf("Digite o seu nome: ");
+        fgets(nome, sizeof(nome), stdin); // Lê o nome do usuário
+        nome[strcspn(nome, "\n")] = 0; // Remove o caractere de nova linha do final da string
+        detectEspacos = (strspn(nome, " ") == strlen(nome)); // Verifica se o nome contém apenas espaços
+        if(strlen(nome) == 0 || detectEspacos){ // Se o nome for vazio ou contiver apenas espaços
+            printf("\nERRO: Nome inválido! Não pode ser vazio ou apenas espaços.\n");
+            system("pause");
+        }
+    } while (strlen(nome) == 0 || detectEspacos); // Continua solicitando o nome até que seja válido
 
     int id_usuario = buscarUsuario(nome, contador_usuarios, usuarios); // Busca o usuário pelo nome
+
     if (id_usuario == -1) { // Se o usuário não foi encontrado
         id_usuario = adicionarUsuario(nome, contador_usuarios, usuarios); // Adiciona o usuário
         if (id_usuario == -1) { // Se não foi possível adicionar o usuário
