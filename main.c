@@ -44,11 +44,8 @@ int main(void) { // Função principal do programa
     int contador_usuarios = 0; // Contador de usuários registrados
 
     carregarDados(&contador_usuarios, usuarios); // Tenta carregar os dados salvos ao iniciar o programa
-
     Menu(&contador_usuarios, usuarios); // Chama a função menu para iniciar o programa
-
     salvarDados(contador_usuarios, usuarios); // Salva os dados dos usuários antes de encerrar o programa
-
     Creditos(); // Exibe os créditos do programa
 
     return 0; // Retorna 0 para indicar que o programa terminou corretamente
@@ -90,7 +87,7 @@ void Menu(int *contador_usuarios, Usuario *usuarios) { // Função para exibir o m
             case 4: // Opção para sair do programa
                 break; // Sai do switch
             default: // Caso de uma opção inválida
-                printf("ERRO: Entrada inválida! Tente novamente.\n"); // Mensagem de erro
+                printf("\nERRO: Entrada inválida! Tente novamente.\n"); // Mensagem de erro
                 system("pause"); // Pausa para o usuário ler a mensagem
                 break; // Sai do switch
         }
@@ -225,12 +222,12 @@ void adicionarAcao(int id_usuario, int id_acao, Usuario *usuarios) { // Função p
             int pontos_anteriores = usuarios[id_usuario].pontuacao; // Armazena a pontuação anterior do usuário
 
             // Adiciona a ação e atualiza a pontuação
-            usuarios[id_usuario].acoes[usuarios[id_usuario].num_acoes++] = id_acao; // Armazena a ação realizada
+            usuarios[id_usuario].acoes[usuarios[id_usuario].num_acoes] = id_acao; // Armazena o id da ação realizada
             usuarios[id_usuario].pontuacao += calcularPontos(id_acao); // Atualiza a pontuação do usuário com os pontos da ação realizada
+            usuarios[id_usuario].num_acoes++; // Incrementa o contador de ações do usuário
 
             // Verifica se o usuário atingiu a meta diária com essa ação
-            if (pontos_anteriores < usuarios[id_usuario].meta_diaria &&
-                usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) { // Se a pontuação anterior era menor que a meta e agora atingiu ou superou a meta
+            if (pontos_anteriores < usuarios[id_usuario].meta_diaria && usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) { // Se a pontuação anterior era menor que a meta e agora atingiu ou superou a meta
                 system("cls"); // Limpa a tela do console
                 printf("\n*****************************************\n");
                 printf("PARABÉNS, %s!\n", usuarios[id_usuario].nome);
@@ -383,7 +380,7 @@ void salvarDados(int contador_usuarios, Usuario *usuarios) { // Função para salv
 
     fclose(arquivo); // Fecha o arquivo
     printf("\nDados salvos com sucesso!\n");
-    Sleep(2000); // Pausa de 2 segundos para o usuário ler a mensagem
+    Sleep(1000); // Pausa de 1 segundo para o usuário ler a mensagem
 }
 
 void carregarDados(int *contador_usuarios, Usuario *usuarios) { // Função para carregar os dados dos usuários a partir de um arquivo
@@ -433,7 +430,8 @@ void Creditos() { // Função para exibir os créditos do programa
     printf("Universidade de Santa Cruz do Sul (UNISC)\n");
     printf("Programação para Resolução de Problemas\n");
     printf("Profa. Dra. Daniela Bagatini\n\n");
-    printf("######################################################\n");
+    printf("######################################################\n\n");
 
-    Sleep(5000); // Pausa de 5 segundos para o usuário ler os créditos
+    printf("Pressione Enter para sair...");
+    getchar(); // Pausa para o usuário ler a mensagem
 }
