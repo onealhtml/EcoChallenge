@@ -21,7 +21,7 @@ typedef struct { // Estrutura para armazenar informações do usuário
     int num_acoes; // Contador de ações do usuário
     int pontuacao; // Pontuação total do usuário
     int meta_diaria; // Meta diária de pontos do usuário
-} Usuario;
+} Usuario; // Definição da estrutura Usuario
 
 void Menu(int *contador_usuarios, Usuario *usuarios); // Declaração da função menu
 void registroAcao(int *contador_usuarios, Usuario *usuarios); // Declaração da função registroAcao
@@ -115,7 +115,7 @@ void registroAcao(int *contador_usuarios, Usuario *usuarios) { // Função para re
     if (id_usuario == -1) { // Se o usuário não foi encontrado
         id_usuario = adicionarUsuario(nome, contador_usuarios, usuarios); // Adiciona o usuário
         if (id_usuario == -1) { // Se não foi possível adicionar o usuário
-            printf("ERRO: Limite de usuários atingido (%d)!\n", MAX_USUARIOS); // Mensagem de erro
+            printf("\nERRO: Limite de usuários atingido (%d)!\n", MAX_USUARIOS); // Mensagem de erro
             printf("Pressione Enter para voltar ao menu principal...");
             getchar(); // Pausa para o usuário ler a mensagem
             return; // Retorna para o menu principal
@@ -186,7 +186,7 @@ int adicionarUsuario(char *nome, int *contador_usuarios, Usuario *usuarios) { //
         usuarios[*contador_usuarios].meta_diaria = 0; // Inicializa a meta diária do usuário
 
         int meta; // Variável para armazenar a meta diária de pontos
-        do
+        do // Loop para solicitar a meta diária até que o usuário forneça um valor válido
         {
             system("cls"); // Limpa a tela do console
             printf("######################################################\n");
@@ -281,12 +281,12 @@ void visualizarAcoes(int *contador_usuarios, Usuario *usuarios) { // Função para
         // Mostra o progresso da meta
         if (usuarios[id_usuario].pontuacao >= usuarios[id_usuario].meta_diaria) { // Se o usuário atingiu ou superou a meta diária
             printf("Status: Meta diária ATINGIDA!\n\n");
-        } else
+        } else // Se o usuário não atingiu a meta diária
             printf("Status: Faltam %d pontos para atingir a meta diária\n\n", usuarios[id_usuario].meta_diaria - usuarios[id_usuario].pontuacao);
 
 
         // Verifica se o usuário registrou ações
-        if (usuarios[id_usuario].num_acoes == 0) {
+        if (usuarios[id_usuario].num_acoes == 0) { // Se o usuário não registrou ações
             printf("Este participante ainda não registrou nenhuma ação.\n");
         } else { // Se o usuário registrou ações, exibe as ações realizadas
             printf("Ações registradas:\n");
